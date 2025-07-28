@@ -59,23 +59,23 @@ RUN powershell -Command "Move-Item -Path 'C:/tmp/engine/ROOT.war' -Destination '
 RUN Remove-Item -Path C:\tmp\engine -Recurse -Force
 
 # Install MS Office Word 
-# WORKDIR C:\\odtsetup
+WORKDIR C:\\odtsetup
 
-# ADD https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_17830-20162.exe odtsetup.exe
+ADD https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_17830-20162.exe odtsetup.exe
 
-# RUN C:\\odtsetup\\odtsetup.exe /quiet /norestart /extract:C:\\odtsetup
+RUN C:\\odtsetup\\odtsetup.exe /quiet /norestart /extract:C:\\odtsetup
 
-# # Copy configuration file 
-# ADD Configuration.xml .
+# Copy configuration file 
+ADD Configuration.xml .
 
-# RUN C:\\odtsetup\\setup.exe /download C:\\odtsetup\\Configuration.xml
+RUN C:\\odtsetup\\setup.exe /download C:\\odtsetup\\Configuration.xml
 
-# RUN C:\\odtsetup\\setup.exe /configure C:\\odtsetup\\Configuration.xml
+RUN C:\\odtsetup\\setup.exe /configure C:\\odtsetup\\Configuration.xml
 
-# WORKDIR /
+WORKDIR /
 
-# # Remove installation directroy after install
-# RUN Remove-Item -Path C:\odtsetup -Recurse -Force
+# Remove installation directroy after install
+RUN Remove-Item -Path C:\odtsetup -Recurse -Force
 
 # Create the Desktop directory required for Office 365 to function
 RUN mkdir C:\\Windows\\SysWOW64\\config\\systemprofile\\Desktop
