@@ -37,32 +37,51 @@ ENV TOMCAT_HOME="C:\\Tomcat"
 # Copy your entrypoint script
 COPY entrypoint.ps1 C:\\entrypoint.ps1
 COPY OfficeToPdf.exe C:\\OfficeToPdf.exe
+
+# Copy the officeToPdf binary
+# COPY OfficeToPdf.exe C:\\Tomcat\\webapps\\ROOT\\WEB-INF\\lib\\OfficeToPDF.exe
+
 COPY RESTfulEngine/ C:/Tomcat/webapps/
-# Expose Tomcat port
-EXPOSE 8080
+
+# Download the outer ZIP file
+ADD https://cdn.windwardstudios.com/Archive/25.X/25.2.1/JavaRESTfulEngine-25.2.1.1.zip /tmp/JavaRESTfulEngine-25.2.1.1.zip
+
+# Unzip first level
+RUN powershell -Command "Expand-Archive -Path 'C:/tmp/JavaRESTfulEngine-25.2.1.1.zip' -DestinationPath 'C:/tmp'"
+
+# Unzip the nested ZIP file
+RUN powershell -Command "Expand-Archive -Path 'C:/tmp/25.2.1.1.zip' -DestinationPath 'C:/tmp/engine'"
+
+# Move ROOT.war to Tomcat webapps
+RUN powershell -Command "Move-Item -Path 'C:/tmp/engine/ROOT.war' -Destination 'C:/Tomcat/webapps/ROOT.war'"
+
+# delete temp 
+RUN Remove-Item -Path C:\tmp\engine -Recurse -Force
 
 # Install MS Office Word 
-WORKDIR C:\\odtsetup
+# WORKDIR C:\\odtsetup
 
-ADD https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_17830-20162.exe odtsetup.exe
+# ADD https://download.microsoft.com/download/2/7/A/27AF1BE6-DD20-4CB4-B154-EBAB8A7D4A7E/officedeploymenttool_17830-20162.exe odtsetup.exe
 
-RUN C:\\odtsetup\\odtsetup.exe /quiet /norestart /extract:C:\\odtsetup
+# RUN C:\\odtsetup\\odtsetup.exe /quiet /norestart /extract:C:\\odtsetup
 
-# Copy configuration file 
-ADD Configuration.xml .
+# # Copy configuration file 
+# ADD Configuration.xml .
 
-RUN C:\\odtsetup\\setup.exe /download C:\\odtsetup\\Configuration.xml
+# RUN C:\\odtsetup\\setup.exe /download C:\\odtsetup\\Configuration.xml
 
-RUN C:\\odtsetup\\setup.exe /configure C:\\odtsetup\\Configuration.xml
+# RUN C:\\odtsetup\\setup.exe /configure C:\\odtsetup\\Configuration.xml
 
-WORKDIR /
+# WORKDIR /
 
-# Remove installation directroy after install
-RUN Remove-Item -Path C:\odtsetup -Recurse -Force
+# # Remove installation directroy after install
+# RUN Remove-Item -Path C:\odtsetup -Recurse -Force
 
 # Create the Desktop directory required for Office 365 to function
 RUN mkdir C:\\Windows\\SysWOW64\\config\\systemprofile\\Desktop
 
+# Expose Tomcat port
+EXPOSE 8080
 
 # Set PowerShell as the entrypoint
 ENTRYPOINT ["powershell.exe", "-ExecutionPolicy", "Bypass", "-File", "C:\\entrypoint.ps1"]

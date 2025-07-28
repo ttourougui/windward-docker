@@ -94,3 +94,7 @@ Invoke-RestMethod `
     -ContentType "application/json"
 
 ```
+```
+2025-07-28 10:29:45 INFO  net.windward.xmlreport.ProcessReport:[] - Using properties: file:/C:/Tomcat/webapps/ROOT/WEB-INF/classes/WindwardReports.properties
+* Using properties: file:/C:/Tomcat/webapps/ROOT/WEB-INF/classes/WindwardReports.properties
+```
