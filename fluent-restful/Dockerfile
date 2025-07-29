@@ -37,7 +37,7 @@ ENV TOMCAT_HOME="C:\\Tomcat"
 # Copy your entrypoint script
 COPY entrypoint.ps1 C:\\entrypoint.ps1
 COPY OfficeToPdf.exe C:\\OfficeToPdf.exe
-
+COPY PdfSharp.dll C:\\PdfSharp.dll
 # Copy the officeToPdf binary
 # COPY OfficeToPdf.exe C:\\Tomcat\\webapps\\ROOT\\WEB-INF\\lib\\OfficeToPDF.exe
 

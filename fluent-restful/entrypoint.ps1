@@ -12,7 +12,7 @@ if (!(Test-Path "$TOMCAT_HOME\bin\catalina.bat")) {
 }
 
 $CONFIG_FILE = "$TOMCAT_HOME\webapps\ROOT\WEB-INF\classes\WindwardReports.properties"
-$LICENSE_LINE = "license=6a1ec2b7-1db4-4336-a181-658d06c00601"
+$LICENSE_LINE = "license=KEY_HERE"
 
 # Start Tomcat in the background (equivalent to catalina.bat run)
 Write-Host "Starting Tomcat in background using 'run' mode..."
@@ -37,6 +37,7 @@ Start-Sleep -Seconds 5
 
 Write-Host "Moving OfficeToPdf.exe to Tomcat webapps lib folder..."
 Move-Item C:\OfficeToPdf.exe C:\Tomcat\webapps\ROOT\WEB-INF\lib\OfficeToPDF.exe
+Move-Item C:\PdfSharp.dll C:\Tomcat\webapps\ROOT\WEB-INF\lib\PdfSharp.dll
 
 if (Test-Path $CONFIG_FILE) {
     Write-Host "WindwardReports.properties found: $CONFIG_FILE"
