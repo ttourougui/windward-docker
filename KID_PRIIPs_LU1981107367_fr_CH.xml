@@ -1,7 +1,6 @@
 <?xml version="1.0" ?>
 <root>
         <Data>
-                <item>
                         <Language>fr</Language>
                         <IsinCode>LU1981107367</IsinCode>
                         <Share_class_currency>EUR</Share_class_currency>
@@ -374,6 +373,5 @@
                         <KID_performance_scenarios_table_scenario_header_2/>
                         <KID_costs_composition_of_costs_table_one_off_costs_header_2/>
                         <PURPOSE_content_20_L3_ref>L'attention des investisseurs en France est attirée sur le fait que cet OPCVM présente, au regard des attentes de l'Autorité des marchés financiers, une communication disproportionnée sur la prise en compte des critères extra-financiers dans sa politique d'investissement.</PURPOSE_content_20_L3_ref>
-                </item>
         </Data>
 </root>
